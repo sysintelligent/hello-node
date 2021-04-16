@@ -1,5 +1,5 @@
 {
-  "name": "node-hello",
+  "name": "hello-node",
   "version": "1.0.0",
   "description": "Node.js Hello World",
   "main": "index.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sysintelligent/node-hello.git"
+    "url": "git+https://github.com/sysintelligent/hello-node.git"
   },
   "author": "David Gu",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sysintelligent/node-hello/issues"
+    "url": "https://github.com/sysintelligent/hello-node/issues"
   },
-  "homepage": "https://github.com/sysintelligent/node-hello#readme",
+  "homepage": "https://github.com/sysintelligent/hello-node#readme",
   "dependencies": {
     "express": "^4.17.1"
   }

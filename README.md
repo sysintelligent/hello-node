@@ -1,2 +1,2 @@
-# node-hello
+# hello-node
 Node.js Hello World
