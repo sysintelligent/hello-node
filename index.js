@@ -1,13 +1,15 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
+const port = 3000;
 
 app.get('/', function (req, res) {
-    res.send('Hello, World! (v1/node.js)\n');
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json({ Message: 'Hello World from Node.js', Version: 'v1' })
 });
 
-var server = app.listen(3000, function () {
-    var host = server.address().address;
-    var port = server.address().port;
-
-    console.log('Example app listening at http://%s:%s', host, port);
+const server = app.listen(port, function () {
+    const host = server.address().address;
+    const port = server.address().port;        
+    console.log('Server running at http://%s:%s', host, port);
 });
