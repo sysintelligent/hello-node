@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/sysintelligent/hello-node#readme",
   "dependencies": {
+    "@cloudnative/health-connect": "^2.1.0",
     "express": "^4.17.1"
   }
 }
