@@ -1,9 +1,6 @@
 # hello-node
 Node.js Hello World
 
-### Version
-1.0.1
-
 ## Install Dependencies
 
 ```
@@ -27,3 +24,9 @@ docker build -t sysintelligent/hello-node .
 ```
 docker push sysintelligent/hello-node:latest
 ```
+
+## Health Probe
+
+- Readiness endpoint: http://localhost:3000/ready
+- Liveness endpoint: http://localhost:3000/live
+- Health endpoint: http://localhost:3000/healthz

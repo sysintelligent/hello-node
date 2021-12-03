@@ -2,32 +2,41 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
+const package = require('./package.json');
+
 const health = require('@cloudnative/health-connect');
-const healthcheck = new health.HealthChecker();
+let healthCheck = new health.HealthChecker();
 
-// This should be resolved once your app is up and running.
-// The result will be checked every time you hit /ready endpoint.
-const readyPromise = new Promise(resolve => {
-    // This will make the app ready after 2 seconds for testing purposes.
-    setTimeout(() => {
-        console.log('READY!')
-        resolve()
-    }, 2000)
-})
+// Register a Liveness check
+const livePromise = () => new Promise((resolve, _reject) => {
+    const appFunctioning = true;
+    // Change the above to a task to determine if your app is functioning correctly
+    
+    if (appFunctioning) {
+        resolve();
+    } else {
+        reject(new Error("App is not functioning correctly"));
+    }
+});
 
-// Naming your check helps registering multiple checks and identifying the hanging ones.
-healthcheck.registerReadinessCheck(new health.ReadinessCheck('testReadyCheck', readyPromise))
+let liveCheck = new health.LivenessCheck("LivenessCheck", livePromise);
+healthCheck.registerLivenessCheck(liveCheck);
 
-// Register the endpoints.
-app.use('/ready', health.ReadinessEndpoint(healthcheck))
-app.use('/healthz', health.LivenessEndpoint(healthcheck));
+// Configure a Readiness liveCheck
+let readyCheck = new health.PingCheck("google.com");
+healthCheck.registerReadinessCheck(readyCheck);
+
+// Register the endpoints
+app.use('/live', health.LivenessEndpoint(healthCheck));
+app.use('/ready', health.ReadinessEndpoint(healthCheck));
+app.use('/healthz', health.HealthEndpoint(healthCheck));
 
 app.get('/', function (req, res) {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
-    res.json({ Message: 'Hello World from Node.js', Version: 'v1.0.1' })
+    res.json({ Message: 'Hello World from Node.js', Version: `${package.version}` });
 });
 
 const server = app.listen(port, function () {
-    console.log(`Server running on port ${port}`);
+    console.log('Server %s running on port %s', package.version, port);
 });
